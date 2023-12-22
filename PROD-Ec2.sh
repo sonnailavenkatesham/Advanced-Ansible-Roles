@@ -7,7 +7,7 @@ DOMAIN_NAME=venkateshamsonnalia143.online
 NAME=$@
 for i in $NAME
 do 
-    echo " Name: $i'-PROB'"
+    echo " Name: $i "
     IP_ADDRESS=$(aws ec2 run-instances --image-id $IMAGE_ID --instance-type $INSTANCE_TYPE --security-group-ids $SECURITY_GROUP --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$i}]" | jq -r '.Instances[0].PrivateIpAddress')
 
     echo " Name:$i and IP:$IP_ADDRESS "
@@ -16,7 +16,7 @@ do
             "Changes": [{
             "Action": "CREATE",
                         "ResourceRecordSet": {
-                                    "Name": "'$i'-PROD'.$DOMAIN_NAME'",
+                                    "Name": "'$i'-prod'.$DOMAIN_NAME'",
                                     "Type": "A",
                                     "TTL": 1,
                                  "ResourceRecords": [{ "Value": "'$IP_ADDRESS'"}]
