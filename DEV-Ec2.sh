@@ -4,7 +4,7 @@ INSTANCE_TYPE=t2.micro
 SECURITY_GROUP=sg-001f7a94d24250a78
 HOTSTED_ZONE_ID=Z05444171VES3WQ8S22YW
 DOMAIN_NAME=venkateshamsonnalia143.online
-NAME=$@ "-dev"
+NAME=$@"-dev"
 for i in $NAME
 do 
     echo " Name: $i "
