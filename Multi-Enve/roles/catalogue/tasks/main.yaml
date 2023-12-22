@@ -1,0 +1,45 @@
+- name: installing nodejs
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: NodeJS
+
+- name: user roboshop setup 
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: user-roboshop
+
+- name: app Setup
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: app-setup
+
+- name: download and unzip {{component}} 
+  ansible.builtin.unarchive:
+    src: https://roboshop-builds.s3.amazonaws.com/{{component}}.zip
+    dest: /app
+    remote_src: yes
+
+- name: NPM install
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: npm-install
+
+- name: copying {{component}}.service
+  ansible.builtin.copy:
+    src: '{{component}}.service'
+    dest: /etc/systemd/system/{{component}}.service
+
+- name: daemon_reload {{component}}
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: daemon-reload
+
+- name: copying mongo.repo and loading the mongo Schema
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: load-mongo-schema
+
+- name: Enabling and starting {{component}}
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: enable-start

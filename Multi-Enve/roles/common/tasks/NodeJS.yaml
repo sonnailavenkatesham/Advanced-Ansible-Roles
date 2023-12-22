@@ -1,0 +1,11 @@
+- name: module disabling nodejs
+  ansible.builtin.shell: dnf module disable nodejs -y
+
+- name: module enabling nodejs:18 
+  ansible.builtin.shell: dnf module enable nodejs:18 -y
+  
+- name: installing nodejs
+  ansible.builtin.yum:
+    name: nodejs
+    state: installed
+

@@ -1,0 +1,9 @@
+- name: Enable and Start {{component}}
+  ansible.builtin.service:
+    name: '{{component}}'
+    enabled: true
+    state: started
+- name: Restarting {{component}}
+  ansible.builtin.service:
+    name: '{{component}}'
+    state: restarted

@@ -1,0 +1,40 @@
+- name: insatll NodeJS
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: NodeJS
+
+- name: cart set-up
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: user-roboshop
+
+- name: app set-up
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: app-setup
+
+- name: download and unzip {{component}}
+  ansible.builtin.unarchive:
+    src: https://roboshop-builds.s3.amazonaws.com/cart.zip
+    dest: /app
+    remote_src: yes
+
+- name: NPM install
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: npm-install
+
+- name: coping cart.service
+  ansible.builtin.copy:
+    src: cart.service
+    dest: /etc/systemd/system/cart.service
+
+- name: daemon reload
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: daemon-reload
+
+- name: sarting cart componet
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: enable-start

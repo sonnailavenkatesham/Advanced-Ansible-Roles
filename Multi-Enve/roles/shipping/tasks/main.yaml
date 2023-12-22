@@ -1,0 +1,53 @@
+- name: installing maven
+  ansible.builtin.yum:
+    name: maven
+    state: installed
+
+- name: User set-up
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: user-roboshop
+
+- name: app set-up
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: app-setup
+
+- name: download and unzip {{component}}
+  ansible.builtin.unarchive: 
+    src: https://roboshop-builds.s3.amazonaws.com/shipping.zip
+    dest: /app
+    remote_src: yes
+
+- name: Cleaning package mvn
+  ansible.builtin.shell: mvn clean package
+  args:
+    chdir: /app
+
+- name: moving to shipping.jar
+  ansible.builtin.shell: mv target/shipping-1.0.jar shipping.jar
+  args:
+    chdir: /app
+
+- name: copying shipping service
+  ansible.builtin.copy:
+    src: shipping.service
+    dest: /etc/systemd/system/shipping.service
+
+- name: Daemon-reload {{component}}
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: daemon-reload
+
+- name: installing mysql
+  ansible.builtin.yum:
+    name: mysql
+    state: installed
+
+- name: Load Schema
+  ansible.builtin.shell: mysql -h mysql.venkateshamsonnalia143.online -uroot -pRoboShop@1 < /app/schema/shipping.sql 
+
+- name: Enable and restarting {{component}}
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: enable-start

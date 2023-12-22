@@ -1,0 +1,5 @@
+- name: installing Roboshop Project
+  hosts: {{component}}
+  become: yes
+  - tasks:
+  - {{component}}
