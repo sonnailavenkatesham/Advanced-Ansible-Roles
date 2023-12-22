@@ -4,10 +4,10 @@ INSTANCE_TYPE=t2.micro
 SECURITY_GROUP=sg-001f7a94d24250a78
 HOTSTED_ZONE_ID=Z05444171VES3WQ8S22YW
 DOMAIN_NAME=venkateshamsonnalia143.online
-NAME=$@"-DEV"
+NAME=$@"-dev"
 for i in $NAME
 do 
-    echo " Name: $i'-DEV' "
+    echo " Name: $i "
     IP_ADDRESS=$(aws ec2 run-instances --image-id $IMAGE_ID --instance-type $INSTANCE_TYPE --security-group-ids $SECURITY_GROUP --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$i}]" | jq -r '.Instances[0].PrivateIpAddress')
 
     echo " $i-IP:$IP_ADDRESS "
