@@ -1,2 +1,17 @@
 [mongodb]
 mongodb-prod.venkateshamsonnalia143.online
+
+[catalogue]
+catalogue-prod.venkateshamsonnalia143.online
+
+[user]
+user-prod.venkateshamsonnalia143.online
+
+[cart]
+cart-prod.venkateshamsonnalia143.online
+
+[web]
+web-prod.venkateshamsonnalia143.online
+
+[shipping]
+shipping-prod.venkateshamsonnalia143.online
