@@ -16,7 +16,7 @@ do
             "Changes": [{
             "Action": "CREATE",
                         "ResourceRecordSet": {
-                                    "Name": "'$i'-prod'.$DOMAIN_NAME'",
+                                    "Name": "'$i.$DOMAIN_NAME'",
                                     "Type": "A",
                                     "TTL": 1,
                                  "ResourceRecords": [{ "Value": "'$IP_ADDRESS'"}]
